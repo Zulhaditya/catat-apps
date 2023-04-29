@@ -1,3 +1,3 @@
-# notes_app
+# Catat!
 
 A new Flutter project.
