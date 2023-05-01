@@ -7,60 +7,56 @@ class ToDoTile extends StatelessWidget {
   final bool taskCompleted;
   Function(bool?)? onChanged;
   Function(BuildContext)? deleteFunction;
+  Function(BuildContext)? updateFunction;
 
   ToDoTile(
       {super.key,
       required this.taskName,
-      required this.taskCompleted,
+      required this.taskDesc,
       required this.onChanged,
       required this.deleteFunction,
-      required this.taskDesc});
+      required this.updateFunction,
+      required this.taskCompleted});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-      child: Slidable(
-        endActionPane: ActionPane(
-          motion: const StretchMotion(),
-          children: [
-            SlidableAction(
-              onPressed: deleteFunction,
-              icon: Icons.delete,
-              backgroundColor: Colors.red.shade300,
-              borderRadius:
-                  const BorderRadius.horizontal(right: Radius.circular(5.0)),
-            )
-          ],
+    return Slidable(
+      endActionPane: ActionPane(motion: const StretchMotion(), children: [
+        SlidableAction(
+          onPressed: updateFunction,
+          icon: Icons.edit,
+          backgroundColor: Colors.green.shade300,
         ),
-        child: Container(
-          padding: const EdgeInsets.all(24.0),
-          decoration: const BoxDecoration(
-              color: Color.fromARGB(225, 255, 255, 255),
-              borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(5.0), right: Radius.circular(5.0))),
-          child: Row(
-            children: [
-              // checkbox
-              Checkbox(
-                value: taskCompleted,
-                onChanged: onChanged,
-                activeColor: Colors.black,
-              ),
-              // task name
-              Text(
-                taskName,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15.0,
-                    decoration: taskCompleted
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none),
-              ),
-            ],
+        SlidableAction(
+          onPressed: deleteFunction,
+          icon: Icons.delete,
+          backgroundColor: Colors.red.shade300,
+        ),
+      ]),
+      child: CheckboxListTile(
+          title: Text(
+            taskName,
+            style: TextStyle(
+              fontSize: 17.0,
+              decoration: taskCompleted
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+            ),
           ),
-        ),
-      ),
+          subtitle: Text(
+            taskDesc,
+            style: TextStyle(
+              decoration: taskCompleted
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+            ),
+          ),
+          value: taskCompleted,
+          onChanged: onChanged,
+          controlAffinity: ListTileControlAffinity.leading,
+          checkboxShape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          activeColor: Colors.black),
     );
   }
 }

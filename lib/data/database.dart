@@ -9,8 +9,8 @@ class TodoDataBase {
   // run this method for the first time opening the apps
   void createInitialData() {
     toDoList = [
-      ["Cooking a food", "Make a receipt and cooking", false],
-      ["Go to breakfast", "After breakfast go to the gym", false],
+      ["Cooking a food", false, "Make a receipt and cooking"],
+      ["Go to breakfast", false, "After breakfast go to the gym"],
     ];
   }
 

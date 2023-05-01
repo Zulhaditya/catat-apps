@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   // checkbox was tapped
   void checkBoxChanged(bool? value, int index) {
     setState(() {
-      db.toDoList[index][2] = !db.toDoList[index][2];
+      db.toDoList[index][1] = !db.toDoList[index][1];
     });
     db.updateDataBase();
   }
@@ -44,8 +44,9 @@ class _HomePageState extends State<HomePage> {
   // save new task
   void saveNewTask() {
     setState(() {
-      db.toDoList.add([_controller.text, false]);
+      db.toDoList.add([_controller.text, false, _controllerDesc.text]);
       _controller.clear();
+      _controllerDesc.clear();
     });
     Navigator.of(context).pop();
     db.updateDataBase();
@@ -53,6 +54,21 @@ class _HomePageState extends State<HomePage> {
 
   // create a new task
   void createNewTask() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogBox(
+          controller: _controller,
+          controllerDesc: _controllerDesc,
+          onSave: saveNewTask,
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
+  // update task
+  void updateTask() {
     showDialog(
       context: context,
       builder: (context) {
@@ -105,8 +121,9 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index) {
             return ToDoTile(
               taskName: db.toDoList[index][0],
-              taskDesc: db.toDoList[index][1],
-              taskCompleted: db.toDoList[index][2],
+              taskCompleted: db.toDoList[index][1],
+              taskDesc: db.toDoList[index][2],
+              updateFunction: (context) => updateTask(),
               onChanged: (value) => checkBoxChanged(value, index),
               deleteFunction: (context) => deleteTask(index),
             );

@@ -1,3 +1,3 @@
 # Catat!
 
-A new Flutter project.
+A mobile-based daily note application using Flutter.

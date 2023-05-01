@@ -10,12 +10,13 @@ class DialogBox extends StatelessWidget {
   VoidCallback onSave;
   VoidCallback onCancel;
 
-  DialogBox(
-      {super.key,
-      required this.controller,
-      required this.onSave,
-      required this.onCancel,
-      required this.controllerDesc});
+  DialogBox({
+    super.key,
+    required this.controller,
+    required this.controllerDesc,
+    required this.onSave,
+    required this.onCancel,
+  });
 
   @override
   Widget build(BuildContext context) {
